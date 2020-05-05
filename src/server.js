@@ -14,9 +14,16 @@ const message = (name, text, id) => ({name, text, id});
 
 app.use(express.static(publicPath));
 
+const users = {};
 io.on('connection', socket => {
 
   console.log('connection');
+
+  socket.on('loginUser', function(){
+    users[socket.id] = 'user';
+    io.emit('login', users);
+    console.log(users);
+  });
 
   socket.on('startClock', () => {
     io.emit("start");
@@ -30,9 +37,14 @@ io.on('connection', socket => {
     io.emit("stop");
   });
 
+  socket.on('resetClock', () => {
+    io.emit("reset");
+  });
+
 
   socket.on('disconnect', () => {
     console.log('disconnect');
+    delete users[socket.id];
   })
 })
 

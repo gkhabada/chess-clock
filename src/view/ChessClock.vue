@@ -1,19 +1,17 @@
 <template lang="pug">
   .clock
     button(@click="startTimer()"   :disabled="!stop") Start
-    button(@click="toggleTimer()"  :disabled="stop" ) Switch
+    button(@click="toggleTimer()"  :disabled="stop || (currentIndex ? player[currentIndex - 1][0] : 0) !== $socket.client.id") Switch
     button(@click="stopTimer()"    :disabled="stop" ) Stop
-    input(
-      type="number"
-      v-model="player"
-      :disabled="!stop"
-      max="10"
-    )
+    button(@click="resetTimer()"    :disabled="!stop" ) Reset
+    p Пользователей: {{ player.length }}
 
     the-timer(
-      v-for="timer in Number(player)"
-      :key="timer"
-      :run="currentIndex === timer && !stop"
+      v-for="(timer, idx) in player"
+      :key="timer[0]"
+      :run="currentIndex === idx + 1 && !stop"
+      :current="$socket.client.id === timer[0]"
+      ref="timer"
     )
 </template>
 
@@ -23,7 +21,18 @@ import TheTimer from '../components/TheTimer.vue'
 export default {
   name: 'ChessClock',
   components: { TheTimer },
+  data() {
+    return {
+      player: 2,
+      currentIndex: null,
+      stop: true,
+    };
+  },
   sockets: {
+    login(users) {
+      console.log('socket login', users);
+      this.player = Object.entries(users);
+    },
     start() {
       console.log('socket start');
       this.stop = false;
@@ -31,7 +40,7 @@ export default {
     },
     toggle() {
       console.log('socket toggle');
-      if (Number(this.player) === this.currentIndex) {
+      if (this.player.length === this.currentIndex) {
         this.currentIndex = 1;
       } else {
         this.currentIndex += 1;
@@ -42,13 +51,15 @@ export default {
       this.stop = true;
       this.currentIndex = null;
     },
+    reset() {
+      this.$refs.timer.forEach(item => {
+        item.timestamp = 0;
+        item.time = '00:00::00';
+      });
+    },
   },
-  data() {
-    return {
-      player: 2,
-      currentIndex: null,
-      stop: true,
-    };
+  created() {
+    this.$socket.client.emit('loginUser');
   },
   methods: {
     startTimer() {
@@ -59,6 +70,9 @@ export default {
     },
     stopTimer() {
       this.$socket.client.emit('stopClock');
+    },
+    resetTimer() {
+      this.$socket.client.emit('resetClock');
     },
   },
 }
@@ -83,6 +97,12 @@ export default {
 
     &:hover
       background-color: rgba(red, .05)
+
+    &:disabled
+      cursor: not-allowed
+      color: #666666
+      background-color: rgba(#000000, .1)
+
 
 
 </style>

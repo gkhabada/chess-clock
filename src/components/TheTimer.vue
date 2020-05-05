@@ -1,5 +1,7 @@
 <template lang="pug">
-  .timer {{ time }}
+  .timer
+    .user(:class="current ? 'i' : 'another'")
+    span {{ time }}
     .active(v-show="run")
 </template>
 
@@ -22,6 +24,10 @@ export default {
       type: Boolean,
       default: false,
       required: false,
+    },
+    current: {
+      type: Boolean,
+      required: true,
     },
   },
   data() {
@@ -83,4 +89,16 @@ export default {
       border-radius: 50%
       background-color: blue
       margin-left: 10px
+
+    .user
+      width: 10px
+      height: 10px
+      border-radius: 50%
+      margin-right: 10px
+
+    .i
+      background-color: orange
+
+    .another
+      background-color: rgba(green, 0.3)
 </style>
