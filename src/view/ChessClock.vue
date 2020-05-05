@@ -1,8 +1,8 @@
 <template lang="pug">
   .clock
-    button(@click="startTimer()") Start
-    button(@click="switchTimer()") Switch
-    button(@click="stopTimer()") Stop
+    button(@click="startTimer()"   :disabled="!stop") Start
+    button(@click="toggleTimer()"  :disabled="stop" ) Switch
+    button(@click="stopTimer()"    :disabled="stop" ) Stop
     input(
       type="number"
       v-model="player"
@@ -15,7 +15,6 @@
       :key="timer"
       :run="currentIndex === timer && !stop"
     )
-    | {{currentIndex}}
 </template>
 
 <script>
@@ -24,6 +23,26 @@ import TheTimer from '../components/TheTimer.vue'
 export default {
   name: 'ChessClock',
   components: { TheTimer },
+  sockets: {
+    start() {
+      console.log('socket start');
+      this.stop = false;
+      this.currentIndex = 1;
+    },
+    toggle() {
+      console.log('socket toggle');
+      if (Number(this.player) === this.currentIndex) {
+        this.currentIndex = 1;
+      } else {
+        this.currentIndex += 1;
+      }
+    },
+    stop() {
+      console.log('socket stop');
+      this.stop = true;
+      this.currentIndex = null;
+    },
+  },
   data() {
     return {
       player: 2,
@@ -33,18 +52,13 @@ export default {
   },
   methods: {
     startTimer() {
-      this.stop = false;
-      this.currentIndex = 1;
+      this.$socket.client.emit('startClock');
     },
-    switchTimer() {
-      if (Number(this.player) === this.currentIndex) {
-        this.currentIndex = 1;
-      } else {
-        this.currentIndex += 1;
-      }
+    toggleTimer() {
+      this.$socket.client.emit('toggleClock');
     },
     stopTimer() {
-      this.stop = true;
+      this.$socket.client.emit('stopClock');
     },
   },
 }

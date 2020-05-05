@@ -1,5 +1,6 @@
 <template lang="pug">
   .timer {{ time }}
+    .active(v-show="run")
 </template>
 
 <script>
@@ -25,7 +26,7 @@ export default {
   },
   data() {
     return {
-      time: '00:00::000',
+      time: '00:00::00',
       timestamp: 0,
       timer: null,
     };
@@ -43,13 +44,12 @@ export default {
 
       this.timer = setInterval(() => {
         this.timestamp += 1;
+        milliseconds = this.timestamp < 100 ? this.timestamp : this.timestamp % 100;
+        seconds = Math.floor((this.timestamp / 100) % 60);
+        minutes = Math.floor((this.timestamp / 100 / 60) % 60);
+        hours = Math.floor((this.timestamp / 100 / 60 / 60) % 60);
 
-        milliseconds = this.timestamp < 1000 ? this.timestamp : this.timestamp % 1000;
-        seconds = Math.floor((this.timestamp / 1000) % 60);
-        minutes = Math.floor((this.timestamp / 1000 / 60) % 60);
-        hours = Math.floor((this.timestamp / 1000 / 60 / 60) % 60);
-
-        let time = `${checkLessThan(minutes)}:${checkLessThan(seconds)}::${checkLessThan(milliseconds, 100)}`;
+        let time = `${checkLessThan(minutes)}:${checkLessThan(seconds)}::${checkLessThan(milliseconds, 10)}`;
 
         if (checkLessThan(hours) > 0) {
           time = `${checkLessThan(hours)}:${time}`;
@@ -57,7 +57,7 @@ export default {
 
         this.time = time;
 
-      }, 1);
+      }, 10);
     },
     stopTimer() {
       clearInterval(this.timer);
@@ -74,4 +74,13 @@ export default {
     font-family: 'Orbitron', sans-serif
     font-family: 'Unica One', cursive
     font-size: 32px
+    display: flex
+    align-items: center
+
+    .active
+      width: 10px
+      height: 10px
+      border-radius: 50%
+      background-color: blue
+      margin-left: 10px
 </style>
