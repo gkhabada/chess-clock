@@ -23,7 +23,7 @@ export default {
   components: { TheTimer },
   data() {
     return {
-      player: 2,
+      player: 1,
       currentIndex: null,
       stop: true,
     };

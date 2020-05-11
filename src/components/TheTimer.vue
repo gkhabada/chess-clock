@@ -6,16 +6,7 @@
 </template>
 
 <script>
-function checkLessThan(val, sym = 10) {
-  val = Number(val);
-  val = isNaN(val) ? 0 : val;
-  sym.toString().split('').forEach((item, index) => {
-    if(val.toString().length <= index) {
-      val = `0${val}`;
-    }
-  });
-  return val;
-}
+import checkLessThan from '../utils/checkLessThan'
 
 export default {
   name: 'TheTimer',
@@ -46,9 +37,10 @@ export default {
     startTimer() {
       let hours, minutes, seconds, milliseconds;
 
-      //TODO setInterval если выбрана другая влкадка
+      //TODO setInterval при неактивной вкладке
 
       this.timer = setInterval(() => {
+
         this.timestamp += 1;
         milliseconds = this.timestamp < 100 ? this.timestamp : this.timestamp % 100;
         seconds = Math.floor((this.timestamp / 100) % 60);
