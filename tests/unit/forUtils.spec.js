@@ -1,10 +1,7 @@
 import { assert } from 'chai'
-// import { shallowMount } from '@vue/test-utils'
-//import TheTimer from '@/components/TheTimer.vue'
 import checkLessThan from '@/utils/checkLessThan'
 
-
-describe("checkLessThan", function() {
+describe("Проверка функции 'checkLessThan'", function() {
 
   it("Прибавляет спереди нули", function() {
     assert.equal(checkLessThan(2, 3), '002');
