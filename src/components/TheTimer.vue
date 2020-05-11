@@ -35,26 +35,20 @@ export default {
   },
   methods: {
     startTimer() {
-      let hours, minutes, seconds, milliseconds;
-
       //TODO setInterval при неактивной вкладке
 
+      let hours, minutes, seconds, milliseconds;
       this.timer = setInterval(() => {
-
         this.timestamp += 1;
         milliseconds = this.timestamp < 100 ? this.timestamp : this.timestamp % 100;
         seconds = Math.floor((this.timestamp / 100) % 60);
         minutes = Math.floor((this.timestamp / 100 / 60) % 60);
         hours = Math.floor((this.timestamp / 100 / 60 / 60) % 60);
-
-        let time = `${checkLessThan(minutes)}:${checkLessThan(seconds)}::${checkLessThan(milliseconds, 10)}`;
-
+        let time = `${checkLessThan(minutes)}:${checkLessThan(seconds)}::${checkLessThan(milliseconds)}`;
         if (checkLessThan(hours) > 0) {
           time = `${checkLessThan(hours)}:${time}`;
         }
-
         this.time = time;
-
       }, 10);
     },
     stopTimer() {
