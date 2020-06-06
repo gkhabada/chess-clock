@@ -50,8 +50,8 @@ io.on('connection', socket => {
     console.log('disconnect');
     delete users[socket.id];
   })
-})
+});
 
 server.listen(port, () => {
   console.log(` server has been started on port ${port}`);
-})
+});

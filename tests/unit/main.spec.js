@@ -15,4 +15,5 @@ describe('Start timer event', () => {
     // wrapper.find('button.start-btn').trigger('click');
     // assert(wrapper.vm.stop).to.be(true);
   })
-})
+
+});

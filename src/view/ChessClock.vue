@@ -1,5 +1,6 @@
 <template lang="pug">
   .clock
+
     button.start-btn(@click="startTimer()"   :disabled="!stop") Start
     button(@click="toggleTimer()"  :disabled="stop || (currentIndex ? player[currentIndex - 1][0] : 0) !== $socket.client.id") Switch
     button(@click="stopTimer()"    :disabled="stop" ) Stop
@@ -13,6 +14,8 @@
       :current="$socket.client.id === timer[0]"
       ref="timer"
     )
+
+
 </template>
 
 <script>
