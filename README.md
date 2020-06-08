@@ -4,7 +4,8 @@
 ```
 yarn install
 ```
-### start server for socket-io
+
+### Start server for socket-io
 ```
 node src/server
 ```
@@ -13,7 +14,6 @@ node src/server
 ```
 yarn serve
 ```
-
 
 
 ### Compiles and minifies for production
