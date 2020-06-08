@@ -1,6 +1,6 @@
 <template lang="pug">
   .clock
-
+    the-info
     button.start-btn(@click="startTimer()"   :disabled="!stop") Start
     button(@click="toggleTimer()"  :disabled="stop || (currentIndex ? player[currentIndex - 1][0] : 0) !== $socket.client.id") Switch
     button(@click="stopTimer()"    :disabled="stop" ) Stop
@@ -20,10 +20,11 @@
 
 <script>
 import TheTimer from '../components/TheTimer.vue'
+import TheInfo from '../components/TheInfo';
 
 export default {
   name: 'ChessClock',
-  components: { TheTimer },
+  components: { TheInfo, TheTimer },
   data() {
     return {
       player: 1,

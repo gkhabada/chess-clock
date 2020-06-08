@@ -1,14 +1,20 @@
-# chess_clock
+# Проект chess clock - шахматные часы.
 
 ## Project setup
 ```
 yarn install
+```
+### start server for socket-io
+```
+node src/server
 ```
 
 ### Compiles and hot-reloads for development
 ```
 yarn serve
 ```
+
+
 
 ### Compiles and minifies for production
 ```

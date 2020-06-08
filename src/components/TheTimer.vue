@@ -63,7 +63,7 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap')
 
   .timer
-    font-family: 'Orbitron', sans-serif
+    /*font-family: 'Orbitron', sans-serif*/
     font-family: 'Unica One', cursive
     font-size: 32px
     display: flex
@@ -73,7 +73,7 @@ export default {
       width: 10px
       height: 10px
       border-radius: 50%
-      background-color: blue
+      background-color: #3498db
       margin-left: 10px
 
     .user
@@ -83,8 +83,9 @@ export default {
       margin-right: 10px
 
     .i
-      background-color: orange
+      background-color: #27ae60
 
     .another
-      background-color: rgba(green, 0.3)
+      background-color: #f39c12
+
 </style>
