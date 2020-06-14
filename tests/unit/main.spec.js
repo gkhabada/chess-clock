@@ -5,15 +5,19 @@ import TheTimer from '@/components/TheTimer.vue';
 
 describe('Start timer event', () => {
   it('Проверка работы таймера', () => {
-    const wrapper = mount(TheTimer);
-    assert(wrapper.vm.timestamp).to.be(0);
+    const wrapper = mount(TheTimer, {
+      propsData: {
+        current: true,
+      },
+    });
+    assert.equal(wrapper.vm.$data.timestamp, 0);
     wrapper.setProps({ run: true });
     setTimeout(() => {
-      assert(wrapper.vm.timestamp).to.be(100);
+      assert.equal(wrapper.vm.$data.timestamp, 100);
     }, 1000);
 
     // wrapper.find('button.start-btn').trigger('click');
-    // assert(wrapper.vm.stop).to.be(true);
+    // assert.equal(wrapper.vm.$data.stop, true);
   })
 
 });
