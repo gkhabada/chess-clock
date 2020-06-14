@@ -45,7 +45,9 @@ io.on('connection', socket => {
     io.emit("reset");
   });
 
-
+  /**
+   * При отключении пользователя удоаляем из списка пользователей
+   */
   socket.on('disconnect', () => {
     console.log('disconnect');
     delete users[socket.id];

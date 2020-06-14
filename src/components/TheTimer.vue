@@ -34,6 +34,10 @@ export default {
     },
   },
   methods: {
+    /**
+     * Запускаем работу таймера
+     * Превращаем миллисекунды в понятный для чтения вид
+     */
     startTimer() {
       //TODO setInterval при неактивной вкладке
 
@@ -51,6 +55,9 @@ export default {
         this.time = time;
       }, 10);
     },
+    /**
+     * Остановка таймера
+     */
     stopTimer() {
       clearInterval(this.timer);
     },

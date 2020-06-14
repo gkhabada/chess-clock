@@ -33,15 +33,25 @@ export default {
     };
   },
   sockets: {
+    /**
+     * Функция при логине через сокет
+     * @param users - пользователи
+     */
     login(users) {
       console.log('socket login', users);
       this.player = Object.entries(users);
     },
+    /**
+     * Активация таймера при запуске через сокет
+     */
     start() {
       console.log('socket start');
       this.stop = false;
       this.currentIndex = 1;
     },
+    /**
+     * Переключение таймера
+     */
     toggle() {
       console.log('socket toggle');
       if (this.player.length === this.currentIndex) {
@@ -50,11 +60,17 @@ export default {
         this.currentIndex += 1;
       }
     },
+    /**
+     * Остановка таймера
+     */
     stop() {
       console.log('socket stop');
       this.stop = true;
       this.currentIndex = null;
     },
+    /**
+     * Сброс таймера
+     */
     reset() {
       this.$refs.timer.forEach(item => {
         item.timestamp = 0;
@@ -66,15 +82,27 @@ export default {
     this.$socket.client.emit('loginUser');
   },
   methods: {
+    /**
+     * Запуск таймера на сокете
+     */
     startTimer() {
       this.$socket.client.emit('startClock');
     },
+    /**
+     * Переключение таймера на сокете
+     */
     toggleTimer() {
       this.$socket.client.emit('toggleClock');
     },
+    /**
+     * Остановка таймера на сокете
+     */
     stopTimer() {
       this.$socket.client.emit('stopClock');
     },
+    /**
+     * Сброс таймера на сокете
+     */
     resetTimer() {
       this.$socket.client.emit('resetClock');
     },
